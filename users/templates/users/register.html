@@ -1,0 +1,33 @@
+{% extends 'users/base.html' %}
+
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/register.css' %}">
+{% endblock style %}
+
+{% block content %}
+<div class="container">
+	<div class="row justify-content-center">
+		<div class="col-md-6">
+			<div class="card mt-5">
+				<div class="card-header">
+					<h3>Become a Valued Member</h3>
+				</div>
+				<div class="card-body">
+					<form method="post">
+						{% csrf_token %}
+						{% for field in form %}
+						<div class="form-group">
+							<label for="{{ field.id_for_label }}" class="font-weight-bold">{{ field.label_tag }}</label>
+							{{ field }}
+						</div>
+						{% endfor %}
+						<button type="submit" class="btn btn-success btn-block">Sign up</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

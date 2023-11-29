@@ -1,0 +1,20 @@
+{% extends 'users/base.html' %}
+
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/logout.css' %}">
+{% endblock style %}
+
+{% block content %}
+<div class="container">
+	<div class="alert alert-danger" role="alert">
+		<h2 class="text-center">Logged out!</h2>
+	</div>
+
+	<h3>Login again?</h3>
+	<a href="{% url 'login' %}" class="btn btn-primary">Login</a>
+	<br />
+	<a href="{% url 'home' %}" class="btn btn-secondary">Or go back to home</a>
+</div>
+{% endblock %}

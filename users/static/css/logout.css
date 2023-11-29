@@ -1,0 +1,15 @@
+/* logout.css */
+
+.container {
+	font-family: 'Times New Roman', Times, serif;
+	margin-top: 50px;
+	text-align: center;
+}
+
+.alert {
+	margin-bottom: 20px;
+}
+
+.btn {
+	margin-top: 10px;
+}
