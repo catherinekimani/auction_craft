@@ -8,6 +8,47 @@ body {
 	margin: 0;
 }
 
+.glass-container {
+	position: relative;
+	background: linear-gradient(180deg, rgba(253, 131, 17, 0.8) 0%, rgba(253, 131, 17, 0) 100%), #f4f4f4;
+	overflow: hidden;
+	height: 100vh;
+	z-index: 1;
+	/* Update z-index to 1 */
+}
+
+.glass-circle {
+	position: absolute;
+	background-color: rgba(253, 131, 17, 0.9);
+	border-radius: 50%;
+	backdrop-filter: blur(10px);
+	z-index: 1;
+}
+
+.glass-circle-large {
+	width: 200px;
+	height: 200px;
+	top: 30%;
+	left: 30%;
+	transform: translate(-50%, -50%);
+}
+
+.glass-circle-medium {
+	width: 150px;
+	height: 150px;
+	top: 70%;
+	left: 30%;
+	transform: translate(-50%, -50%);
+}
+
+.glass-circle-small {
+	width: 100px;
+	height: 100px;
+	top: 50%;
+	left: 70%;
+	transform: translate(-50%, -50%);
+}
+
 .login-container {
 	max-width: 500px;
 	width: 100%;
@@ -17,12 +58,14 @@ body {
 	border-radius: 8px;
 	box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 	margin: auto;
+	z-index: 2;
 }
 
+/* ... rest of your existing styles ... */
+
 h3 {
-	color: #007bff;
+	color: #FD8311;
 	text-align: center;
-	margin-bottom: 20px;
 	font-size: 28px;
 }
 
@@ -31,29 +74,30 @@ form {
 }
 
 form p {
-	margin-bottom: 20px;
+	margin-bottom: 5px;
 }
 
 form label {
 	display: block;
-	margin-bottom: 8px;
 	font-weight: bold;
 	color: #495057;
 }
 
 form input {
 	width: 100%;
-	padding: 12px;
+	padding: 10px;
 	font-size: 20px;
-	border: 1px solid #ced4da;
-	border-radius: 5px;
-	margin-bottom: 15px;
+	border: none;
+	border-bottom: 1px solid #000;
+	margin-bottom: 10px;
+	outline: none;
+	cursor:text;
 }
 
 form button {
 	width: 100%;
 	padding: 12px;
-	background-color: #007bff;
+	background-color: #FD8311;
 	color: #fff;
 	border: none;
 	border-radius: 5px;
@@ -62,7 +106,7 @@ form button {
 }
 
 form button:hover {
-	background-color: #0056b3;
+	background-color: #D56E00;
 }
 
 p.text-center {
@@ -70,4 +114,20 @@ p.text-center {
 	margin-top: 20px;
 	font-size: 16px;
 	color: #6c757d;
+}
+
+.header {
+	color: #000;
+	padding: 10px;
+	text-align: center;
+}
+
+.header a {
+	color: #FD8311;
+	text-decoration: none;
+	margin: 0 10px;
+}
+
+.header a:hover {
+	border-bottom: 2px solid #FD8311;
 }

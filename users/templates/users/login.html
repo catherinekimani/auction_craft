@@ -7,6 +7,9 @@
 {% endblock style %}
 
 {% block content %}
+	<div class="glass-circle glass-circle-large"></div>
+	<div class="glass-circle glass-circle-medium"></div>
+	<div class="glass-circle glass-circle-small"></div>
 <div class="login-container">
 	<h3>Welcome Back! Login to Your Account</h3>
 
@@ -22,5 +25,10 @@
 	</form>
 
 	<p class="text-center">Don't have an account? <a href="{% url 'register' %}">Signup here</a></p>
+</div>
+<div class="header">
+	<a href="{% url 'home' %}">Home</a>
+	<a href="">About</a>
+	<a href="">Links</a>
 </div>
 {% endblock %}
