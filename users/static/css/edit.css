@@ -1,0 +1,83 @@
+/* Reset some default browser styles */
+body,
+h1,
+h2,
+h3,
+p,
+figure,
+blockquote,
+dl,
+dd {
+	margin: 0;
+}
+
+body {
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	line-height: 1.6;
+	color: #333;
+	background-color: #f8f9fa;
+	/* Light gray background color */
+}
+
+/* Header Styles */
+.header {
+	padding: 20px;
+	background-color: #ffffff;
+	/* White background color */
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+	/* Subtle box shadow */
+}
+
+.row {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+/* Card Styles */
+.card {
+	border: none;
+	border-radius: 8px;
+	overflow: hidden;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+	/* Slightly stronger box shadow */
+}
+
+.card-img-top {
+	max-height: 200px;
+	object-fit: cover;
+	/* Maintain image aspect ratio */
+}
+
+.card-body {
+	text-align: center;
+}
+
+.card-title {
+	font-size: 1.5rem;
+	margin-bottom: 5px;
+}
+
+.card-text {
+	color: #555;
+}
+
+.btn-outline-info {
+	color: #17a2b8;
+	border-color: #17a2b8;
+}
+
+/* Form Styles */
+form {
+	width: 75%;
+	margin: 20px auto;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+
+	.card,
+	form {
+		width: 100%;
+	}
+}
