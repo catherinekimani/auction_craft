@@ -4,72 +4,6 @@
 	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href="{% static 'fontawesome/css/all.min.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}" />
-<style>
-	/* Add your custom styles here */
-	body {
-		background-color: #f8f9fa;
-		/* Light background color */
-		font-family: 'Times New Roman', serif;
-		/* Times New Roman font */
-	}
-
-	.header {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		padding: 20px;
-	}
-
-	.user-card {
-		max-width: 18rem;
-		width: 100%;
-		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-		/* Subtle box shadow */
-		border-radius: 12px;
-		overflow: hidden;
-		background-color: #ffffff;
-		/* White background color */
-	}
-
-	.user-image {
-		width: 100%;
-		height: auto;
-		border-top-left-radius: 12px;
-		border-top-right-radius: 12px;
-	}
-
-	.card-body {
-		text-align: center;
-		padding: 20px;
-	}
-
-	.card-title {
-		color: #333333;
-		/* Dark text color */
-		font-size: 1.5rem;
-		margin-bottom: 10px;
-	}
-
-	.card-text {
-		color: #555555;
-		/* Medium-dark text color */
-		margin-bottom: 15px;
-	}
-
-	.btn-contact {
-		background-color: #007bff;
-		/* Primary button color */
-		color: #ffffff;
-		/* Button text color */
-		border: none;
-		transition: background-color 0.3s ease-in-out;
-	}
-
-	.btn-contact:hover {
-		background-color: #0056b3;
-		/* Darker color on hover */
-	}
-</style>
 {% endblock %}
 
 <div class="header">
@@ -90,3 +24,8 @@
 		{% endif %}
 	</div>
 </div>
+<footer class="footer mt-auto">
+	<div class="container text-center">
+		<p>&copy; 2023 Your Auction Site. All rights reserved.</p>
+	</div>
+</footer>
