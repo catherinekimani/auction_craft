@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import include, path
 from . import views
 
 urlpatterns = [
@@ -8,4 +8,5 @@ urlpatterns = [
     path('cart/', views.cart, name='cart'),
     path('clients/', views.clients_view, name='clients'),
     path('footer/', views.footer_view, name='footer'),
+    path('bids/', views.bids, name='bids'),
 ]

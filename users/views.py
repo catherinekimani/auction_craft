@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegistrationForm, ProfileUpdateForm,ProfileForm, AddToCartForm
 from .models import Profile, AuctionItem
+from .models import Bid
 # Create your views here.
 def home(request):
     best_selling_items = AuctionItem.objects.all()
@@ -83,3 +84,7 @@ def cart(request):
 
 
     return render(request, 'users/cart.html', {'cart': cart})
+
+def bids(request):
+    bids = Bid.objects.all()
+    return render(request, 'users/bid_list.html', {'bids': bids})

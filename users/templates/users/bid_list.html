@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bid List</title>
+</head>
+<body>
+    <h1>Bid List</h1>
+    <ul>
+        {% for bid in bids %}
+            <li>{{ bid.amount }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
