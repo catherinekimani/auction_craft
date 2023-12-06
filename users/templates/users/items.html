@@ -1,0 +1,33 @@
+{% extends 'users/base.html' %}
+
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/items.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock style %}
+
+{% block content %}
+	<h2>Best Selling</h2>
+
+<div id="featured-auctions" class="auction-container">
+	{% for item in best_selling_items %}
+				<div class="auction-item">
+					<div class="auction-image">
+						<img  src="{{ item.image.url }}" alt="{{ item.title }}">
+						<div class="sale-badge">Sale!!</div>
+					</div>
+					<div class="auction-details">
+						<div class="auction-title">{{ item.title }}</div>
+						<div class="auction-description">{{ item.description }}</div>
+						<div class="auction-price">{{ item.sale_price|default:item.price }}</div>
+						<div class="auction-countdown" id="countdown{{ item.id }}"></div>
+							<a href="{% url 'add_to_cart' item.id %}" class="add-to-cart-btn">Add to Cart</a>
+					</div>
+				</div>
+	{% endfor %}
+
+</div>
+
+<script src="{% static 'scripts/countdown.js' %}"></script>
+{% endblock %}

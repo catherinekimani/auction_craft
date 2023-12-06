@@ -1,0 +1,73 @@
+{% extends 'users/base.html' %}
+
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/footer.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock style %}
+
+{% block content %}
+<footer class="footer-distributed">
+
+	<div class="footer-left">
+
+		<h3>Auction<span>craft</span></h3>
+
+		<p class="footer-links">
+			<a href="#" class="link-1">Home</a>
+
+			<a href="#">Blog</a>
+
+			<a href="#">Pricing</a>
+
+			<a href="#">About</a>
+
+			<a href="#">Faq</a>
+
+			<a href="#">Contact</a>
+		</p>
+
+		<p class="footer-company-name">Auction Craft© 2023</p>
+	</div>
+
+	<div class="footer-center">
+
+		<div>
+			<i class="fa fa-map-marker"></i>
+			<p><span>5th Avenue</span> Kenya, Nairobi</p>
+		</div>
+
+		<div>
+			<i class="fa fa-phone"></i>
+			<p>+1.007.234.1276</p>
+		</div>
+
+		<div>
+			<i class="fa fa-envelope"></i>
+			<p><a href="mailto:support@company.com">support@auctionCraft.com</a></p>
+		</div>
+
+	</div>
+
+	<div class="footer-right">
+
+		<p class="footer-company-about">
+			<span>About the Auction Craft</span>
+			Lorem ipsum dolor sit amet, consectateur adispicing elit. Fusce euismod convallis velit, eu auctor lacus
+			vehicula sit amet.
+		</p>
+
+		<div class="footer-icons">
+
+			<a href="#"><i class="fa fa-facebook"></i></a>
+			<a href="#"><i class="fa fa-twitter"></i></a>
+			<a href="#"><i class="fa fa-linkedin"></i></a>
+			<a href="#"><i class="fa fa-github"></i></a>
+
+		</div>
+
+	</div>
+
+</footer>
+{% endblock %}

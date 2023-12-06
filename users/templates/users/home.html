@@ -1,6 +1,17 @@
+{% extends 'users/base.html' %}
+
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+{% endblock style %}
+
+{% block content %}
 {% if user.is_authenticated %}
 <div class="alert alert-success" role="alert">
+	<div class="title">
 	<h3>Welcome {{ user.username }}!</h3>
+	</div>
 	<a href="{% url 'logout' %}">Logout?</a>
 </div>
 {% else %}
@@ -10,3 +21,10 @@
 	<a href="{% url 'login' %}">Login</a>
 </div>
 {% endif %}
+{% include 'users/items.html' with best_selling_items=best_selling_items %}
+
+{% include 'users/clients.html' %}
+
+{% include 'users/footer.html' %}
+
+{% endblock content %}

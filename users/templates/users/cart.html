@@ -1,0 +1,15 @@
+{% extends 'users/base.html' %}
+
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/items.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock style %}
+
+{% block content %}
+<h2>Your Cart</h2>
+<p>Item: {{ item.title }}</p>
+<p>Quantity: {{ quantity }}</p>
+<p>Total: ${{ total }}</p>
+{% endblock %}

@@ -1,0 +1,83 @@
+{% extends 'users/base.html' %}
+
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/clients.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock style %}
+
+{% block content %}
+	<div class="cont">
+		<h2>Satisfied Clients </h2>
+		<p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid, atque? Repudiandae
+			possimus asperiores hic nemo id a molestiae minus impedit!</p>
+	
+		<div class="reviewSection">
+	
+			<div class="reviewItem">
+				<div class="top">
+					<div class="clientImage">
+						<img src="https://ouch-cdn2.icons8.com/V7FCPLf2Q8O_dqzMMsNT02dxI1cbnhGzUqh6Dt0Ke3A/rs:fit:368:368/czM6Ly9pY29uczgu/b3VjaC1wcm9kLmFz/c2V0cy9zdmcvNTMx/LzViMjM0MDE4LWIw/YWItNGRiNy05NmQ1/LTU0MTQ4NjY3YTRm/Ni5zdmc.png" alt="">
+						<span>Kay Catherine</span>
+					</div>
+					<ul>
+						<li><i class="fa-solid fa-star"></i></li>
+						<li><i class="fa-solid fa-star"></i></li>
+						<li><i class="fa-solid fa-star"></i></li>
+						<li><i class="fa-regular fa-star"></i></li>
+						<li><i class="fa-regular fa-star"></i></li>
+					</ul>
+				</div>
+				<article>
+					<p class="review">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugit beatae ipsa
+						voluptatibus perferendis quos eaque nemo error tempora harum quas, laudantium tenetur, neque,
+						facere exercitationem!</p>
+					<p>Jan 01, 2023</p>
+				</article>
+			</div>
+				<!-- Clients Review-2 Section Starts from Here  -->
+				<div class="reviewItem">
+					<div class="top">
+						<div class="clientImage">
+							<img src="https://ouch-cdn2.icons8.com/g9l4VVFtLZQ4b5B1xOjENFYyH7O0Rk9wzgBezEJwmEM/rs:fit:368:503/czM6Ly9pY29uczgu/b3VjaC1wcm9kLmFz/c2V0cy9zdmcvNTg4/LzYzN2E2NmQ0LWVm/NzItNDA5OC05NDQ3/LTIzMGU0ZWZlODYx/Ny5zdmc.png" alt="">
+							<span>Emmanuel Mwembe</span>
+						</div>
+						<ul>
+							<li><i class="fa-solid fa-star"></i></li>
+							<li><i class="fa-solid fa-star"></i></li>
+							<li><i class="fa-solid fa-star"></i></li>
+							<li><i class="fa-regular fa-star"></i></li>
+							<li><i class="fa-regular fa-star"></i></li>
+						</ul>
+					</div>
+					<article>
+						<p class="review">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugit beatae ipsa
+							voluptatibus perferendis quos eaque nemo error tempora harum quas, laudantium tenetur, neque,
+							facere exercitationem!</p>
+						<p>Jan 01, 2023</p>
+					</article>
+				</div>
+					<!-- Clients Review-3 Section Starts from Here  -->
+					<div class="reviewItem">
+						<div class="top">
+							<div class="clientImage">
+								<img src="https://ouch-cdn2.icons8.com/Usvt9XUvf0spdSeW3HUSHyQdUbKZF7Q9dudp5d4uGno/rs:fit:368:368/czM6Ly9pY29uczgu/b3VjaC1wcm9kLmFz/c2V0cy9zdmcvODc1/LzM2M2QxNDAxLWY4/MWMtNDZkYy1iZjk3/LTBhZjRlYzA3NmZh/NC5zdmc.png" alt="">
+								<span>Alx Mentor</span>
+							</div>
+							<ul>
+								<li><i class="fa-solid fa-star"></i></li>
+								<li><i class="fa-solid fa-star"></i></li>
+								<li><i class="fa-solid fa-star"></i></li>
+								<li><i class="fa-regular fa-star"></i></li>
+								<li><i class="fa-regular fa-star"></i></li>
+							</ul>
+						</div>
+						<article>
+							<p class="review">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Est voluptatibus et, atque distinctio soluta ullam corrupti odio id eveniet quod, possimus at facilis ipsa? Minus impedit totam accusamus. Voluptatem, fugit!</p>
+							<p>Jan 01, 2023</p>
+						</article>
+					</div>
+					</div>
+					</div>
+{% endblock %}
