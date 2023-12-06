@@ -2,11 +2,18 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .forms import UserRegistrationForm, ProfileUpdateForm,ProfileForm
-from .models import Profile
+from .forms import UserRegistrationForm, ProfileUpdateForm,ProfileForm, AddToCartForm
+from .models import Profile, AuctionItem
 # Create your views here.
 def home(request):
-    return render(request, 'users/home.html')
+    best_selling_items = AuctionItem.objects.all()
+    return render(request, 'users/home.html', {'best_selling_items': best_selling_items})
+
+def footer_view(request):
+    return render(request, 'users/footer.html')
+
+def clients_view(request):
+    return render(request, 'users/clients.html')
 
 def register(request):
     if request.method == 'POST':
@@ -51,3 +58,28 @@ def editprofile(request):
         form = ProfileUpdateForm(instance=request.user.profile)
         
     return render(request,'users/profile/edit.html',{'form':form})
+
+def add_to_cart(request, item_id):
+    item = AuctionItem.objects.get(pk=item_id)
+
+    if request.method == 'POST':
+        form = AddToCartForm(request.POST)
+        if form.is_valid():
+            quantity = form.cleaned_data['quantity']
+
+            total = quantity * item.price
+
+            cart = request.session.get('cart', {})
+            cart[item_id] = cart.get(item_id, 0) + quantity
+            request.session['cart'] = cart
+
+            return render(request, 'users/cart.html', {'item': item, 'quantity': quantity, 'total': total})
+    else:
+        form = AddToCartForm()
+
+    return render(request, 'users/add_to_cart.html', {'item': item, 'form': form})
+def cart(request):
+    cart = request.session.get('cart', {})
+
+
+    return render(request, 'users/cart.html', {'cart': cart})
