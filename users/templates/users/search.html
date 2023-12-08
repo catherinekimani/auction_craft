@@ -9,7 +9,7 @@
 		{% for product in products %}
 		<div class="col-lg-4 my-4">
 			<div class="card shadow align-items-center" style="width: 20rem; height: 23rem;">
-				<img src="/media/{{product.image}}" class="card-img-top" alt="..." style="width: 170px; height: 260px;">
+				<img src="{{ product.image.url }}"card-img-top" alt="..." style="width: 170px; height: 260px;">
 				<div class="card-body">
 					<h5 class="card-title">{{product.name}}</h5>
 					<hr>
@@ -20,7 +20,7 @@
 					{% else %}
 					<button class="btn" style="background-color: #fd8311; color: white;">Login to add the item</button>
 					{% endif %}
-					<h4 style="display: inline-block; float: right;">₹{{product.price}}</h4>
+					<h4 style="display: inline-block; float: right;">{{product.price}}</h4>
 				</div>
 			</div>
 		</div>

@@ -7,17 +7,17 @@
 	<div class="row">
 		<div class="col-md-4">
 			<div class="row">
-				<img src="/media/{{product.image}}" alt="" style="width: 300px; height: 400px;">
+				<img src="{{ product.image.url }}" alt="" style="width: 300px; height: 400px;">
 			</div>
 			<br>
 			<div class="row">
 				<button data-product="{{product.id}}" data-action="add" class="btn add-btn update-cart"
-					style="background-color: #8c5d4f; color: white; width: 15rem;">Add To Cart</button>
+					style="background-color: #FD8311; color: white; width: 15rem;">Add To Cart</button>
 			</div>
 		</div>
 		<div class="col-md-8">
 			<h3>{{product.name}}</h3>
-			<p style="font-size: 25px;"><b>₹ {{product.price}}</b></p>
+			<p style="font-size: 25px;"><b>{{product.price}}</b></p>
 			<br>
 			<h5>Key Features:</h5>
 			<ul>
