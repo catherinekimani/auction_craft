@@ -1,0 +1,23 @@
+/* Add your styles here */
+.box-element {
+	/* Add box-element styles */
+}
+
+.row-image-container {
+	flex: 2;
+}
+
+.row-image {
+	/* Add row-image styles */
+}
+
+.product-name {
+	flex: 2;
+	margin-left: 10px;
+}
+
+.product-price,
+.product-quantity {
+	flex: 1;
+	margin-left: 10px;
+}

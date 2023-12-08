@@ -1,0 +1,24 @@
+.container {
+	padding-top: 2rem;
+	margin-top: 3rem;
+}
+
+h2 {
+	color: #333;
+}
+
+.form-group {
+	margin-top: 1rem;
+}
+
+.form-control {
+	width: 100%;
+	padding: 0.5rem;
+}
+
+.btn-cont {
+	background-color: #fd8311;
+	color: white;
+	width: 8rem;
+	margin-top: 1rem;
+}

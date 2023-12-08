@@ -1,3 +1,26 @@
-.title h3 {
-	color: red;
-}
+	html,
+	body {
+		height: 100%;
+		margin: 0;
+		padding: 0;
+		font-family: 'Open Sans';
+	}
+
+	.wrapper {
+		min-height: 100%;
+		position: relative;
+	}
+
+	.content {
+		padding-bottom: 150px;
+	}
+
+	.card {
+		width: 20rem;
+		height: 25rem;
+	}
+
+	.btn {
+		background-color: #fd8311;
+		color: white;
+	}

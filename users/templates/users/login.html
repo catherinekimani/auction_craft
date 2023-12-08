@@ -1,34 +1,24 @@
 {% extends 'users/base.html' %}
-
 {% load static %}
 
-{% block style %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
-{% endblock style %}
+{% block css %}
+{% endblock %}
+{% block body %}
+<form method="POST">
+	{% csrf_token %}
+	<div class="container mt-5">
+		<div class="mb-3">
+			<label for="username" class="form-label"><i style="font-weight: bold;">Username</i></label>
+			<input type="text" class="form-control" id="username" name="username" placeholder="Enter Username">
+		</div>
+		<div class="mb-3">
+			<label for="password" class="form-label"><i style="font-weight: bold;">Password</i></label>
+			<input type="password" class="form-control" id="password" name="password" placeholder="Enter Password">
+		</div>
+		<br>
+		<input type="submit" value="Submit" class="btn"
+			style="background-color: #8c5d4f; color: white; font-size: larger; width: 8rem;">
 
-{% block content %}
-	<div class="glass-circle glass-circle-large"></div>
-	<div class="glass-circle glass-circle-medium"></div>
-	<div class="glass-circle glass-circle-small"></div>
-<div class="login-container">
-	<h3>Welcome Back! Login to Your Account</h3>
-
-	<form action="" method="POST">
-		{% csrf_token %}
-		{% for field in form %}
-		<p>
-			<label for="{{ field.id_for_label }}">{{ field.label }}:</label><br />
-			{{ field }}
-		</p>
-		{% endfor %}
-		<button type="submit">Login</button>
-	</form>
-
-	<p class="text-center">Don't have an account? <a href="{% url 'register' %}">Signup here</a></p>
-</div>
-<div class="header">
-	<a href="{% url 'home' %}">Home</a>
-	<a href="">About</a>
-	<a href="">Links</a>
-</div>
+	</div>
+</form>
 {% endblock %}
