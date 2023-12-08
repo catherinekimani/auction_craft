@@ -1,12 +1,25 @@
-from django.urls import include, path
+from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('profile',views.profile,name='profile'),
-    path('editprofile',views.editprofile,name='editprofile'),
-    path('add_to_cart/<int:item_id>/', views.add_to_cart, name='add_to_cart'),
-    path('cart/', views.cart, name='cart'),
-    path('clients/', views.clients_view, name='clients'),
+    path("", views.home, name="home"),
+
+    path("register/", views.register, name="register"),
+    path("login/", views.Login, name="login"),
+    path("logout/", views.Logout, name="logout"),
+
+    path("change_password/", views.change_password, name="change_password"),
+
+    path("loggedin_contact/", views.loggedin_contact, name="loggedin_contact"),
+
+    path("contact/", views.contact, name="contact"),
+    
+    path("product_view/<int:myid>/", views.product_view, name="product_view"),
+    path("update_item/", views.updateItem, name="update_item"),
+
+    path("cart/", views.cart, name="cart"),
+    path("search/", views.search, name="search"),
+    path("checkout/", views.checkout, name="checkout"),
+
     path('footer/', views.footer_view, name='footer'),
-    path('bids/', views.bids, name='bids'),
 ]
