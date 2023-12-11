@@ -1,0 +1,59 @@
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .container {
+    width: 80%;
+    margin: 0 auto;
+  }
+  
+  .about-section {
+    background-color: #FD8311; /* Background color for the About section */
+    color: #ffffff; /* Text color */
+    padding: 40px 0; /* Top and bottom padding */
+  }
+  
+  .about-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .about-image {
+    width: 60%; /* Equal width for image column */
+  }
+  
+  .about-image img {
+    max-width:80%; /* Make sure the image is responsive within its container */
+     border-radius: 15px;
+  }
+  
+  .about-text {
+    width: 40%; /* Equal width for text column */
+  }
+  
+  .about-title {
+    font-size: 35px;
+    font-weight: bold;
+    color: #ffffff;
+  }
+  
+  .about-description {
+    font-size: 18px;
+    margin-bottom: 20px; /* Adjust spacing between title and description */
+  }
+  
+  .start-selling-button {
+    display: inline-block;
+    padding: 10px 20px; /* Adjust padding for button size */
+    background-color: #ffffff;
+    color: #FD8311;
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .start-selling-button:hover {
+    background-color: #FD8311;
+    color: #ffffff;
+  }  

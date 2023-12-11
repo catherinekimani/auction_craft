@@ -1,12 +1,11 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,500,300,700);
 
 * {
-	font-family: Open Sans;
+	font-family: poppins;
 }
 
     .footer-distributed {
-        position: absolute;
-        bottom: 0;
+		position: relative;
         width: 100%;
         height: 250px;
         background: #FD8311;
