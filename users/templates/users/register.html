@@ -1,15 +1,22 @@
 {% extends 'users/base.html' %}
 {% load static %}
 
-{% block css %}
-{% endblock %}
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/register.css' %}">
+<style>
+	.navbar {
+		background-color: #FD8311;
+	}
+</style>
+{% endblock style %}
+
 {% block body %}
-<form class="container mt-4" method="POST">
+<form class="register-container mt-4" method="POST">
 	{% csrf_token %}
 
 	<div class="row">
 		<div class="form-group col-md-12">
-			<label>Full Name</label>
+			<label class="form-label">Full Name</label>
 			<input type="text" class="form-control" name="full_name" id="full_name" placeholder="Enter Full Name"
 				required>
 		</div>
@@ -17,11 +24,11 @@
 
 	<div class="row mt-4">
 		<div class="form-group col-md-6">
-			<label>Email Id</label>
+			<label class="form-label">Email Id</label>
 			<input type="email" class="form-control" name="email" id="email" placeholder="Enter Email Id" required>
 		</div>
 		<div class="form-group col-md-6">
-			<label>Contact Number</label>
+			<label class="form-label">Contact Number</label>
 			<input type="tel" class="form-control" name="phone_number" id="phone_number"
 				placeholder="Enter Contact Number" required>
 		</div>
@@ -29,26 +36,24 @@
 
 	<div class="row mt-4">
 		<div class="form-group col-md-12">
-			<label>Username</label>
+			<label class="form-label">Username</label>
 			<input type="text" class="form-control" name="username" id="username" placeholder="Enter Username" required>
 		</div>
 	</div>
 
 	<div class="row mt-4">
 		<div class="form-group col-md-6">
-			<label>Password</label>
+			<label class="form-label">Password</label>
 			<input type="password" class="form-control" name="password1" id="password1" placeholder="Enter Password"
 				required>
 		</div>
 		<div class="form-group col-md-6">
-			<label>Confirm Password</label>
+			<label class="form-label">Confirm Password</label>
 			<input type="password" class="form-control" name="password2" id="password2" placeholder="Confirm Password"
 				required>
 		</div>
 	</div>
 
-
-	<input type="submit" value="Submit" class="btn mt-4"
-		style="background-color: #FD8311; color: white; font-size: larger; width: 9rem;">
+	<input type="submit" value="Submit" class="register-btn">
 </form>
 {% endblock %}

@@ -1,0 +1,50 @@
+	.register-container {
+		max-width: 700px;
+		margin: auto;
+		margin-top: 50px;
+		background-color: #ffffff;
+		padding: 30px;
+		border-radius: 10px;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	}
+
+	.form-label {
+		font-weight: bold;
+		color: #495057;
+	}
+
+	.form-control {
+		width: 100%;
+		border: 1px solid #ced4da;
+		border-radius: 5px;
+	}
+
+	.register-btn {
+		background-color: #FD8311;
+		color: #ffffff;
+		padding: 10px 15px;
+		border: none;
+		border-radius: 5px;
+		cursor: pointer;
+		font-size: 16px;
+	}
+
+	.register-btn:hover {
+		background-color: #FFA347;
+	}
+
+	.register-container {
+		animation: fadeIn 0.5s ease-in-out;
+	}
+
+	@keyframes fadeIn {
+		from {
+			opacity: 0;
+			transform: translateY(-20px);
+		}
+
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
