@@ -28,13 +28,16 @@
 {% block body %}
 
 <div class="wrapper">
+		{% include 'users/hero.html' %}
+		{% include 'users/about.html' %}
+
 <div class="container mt-2 mb-3 content">
 
 	<div class="row">
 		{% for product in products %}
 		<div class="col-lg-4 my-4">
 			<div class="card shadow align-items-center" style="width: 20rem; height: 25rem;">
-				<img src="{{ product.image.url }}" class="card-img-top user-image" alt="productImage">
+				<img src="{{ product.image.url }}" class="card-img-top user-image" alt="productImage" style="height: 250px;">
 				<div class="card-body">
 					<h5 class="card-title">{{product.name}}</h5>
 					<hr>
@@ -53,4 +56,5 @@
 	</div>
 </div>
 </div>
+	{% include 'users/footer.html' %}
 {% endblock %}

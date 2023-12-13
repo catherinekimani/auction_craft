@@ -1,18 +1,25 @@
 {% extends 'users/base.html' %}
 {% load static %}
-{% block css %}
-{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/logged_contact.css' %}">
+<style>
+	.navbar {
+		background-color: #FD8311;
+	}
+</style>
+{% endblock style %}
+
 {% block body %}
-<div class="container py-2 mt-3">
+<div class="logged-container py-2 mt-3">
 	<h2>Contact Us</h2>
 	<form method="post">{% csrf_token %}
 
-		<div class="form-group">
-			<div class="form-group mt-2">
-				<label>How can We Help You ?</label>
-				<textarea class="form-control mt-2" id="desc" name="desc" rows="3"></textarea>
-			</div>
-			<button type="submit" style="background-color: #FD8311; color: white; width: 8rem;"
-				class="btn mt-4">Submit</button>
+		<div class="form-group mt-2">
+			<label class="form-label">How can We Help You?</label>
+			<textarea class="form-control mt-2" id="desc" name="desc" rows="3"></textarea>
+		</div>
+		<button type="submit" class="btn-logged mt-4">Submit</button>
 	</form>
+</div>
 {% endblock %}

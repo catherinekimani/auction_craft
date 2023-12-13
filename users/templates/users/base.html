@@ -8,7 +8,8 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
 		integrity="sha384-wvfXpqpZZVQGKKGJ3RM9kLkxL8sX5ISqIn1av5QgHijsR5prS00HzPKFVrNh5cuI" crossorigin="anonymous">
 
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+		integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 	<title>User Authentication System</title>
 
 	{% block style %}
@@ -27,7 +28,7 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<div class="container w-75">
+				<div class="w-75">
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 						<li class="nav-item">
 							<a class="nav-link active" aria-current="page" href="/">Home</a>
@@ -68,15 +69,11 @@
 				<form class="d-flex" method="POST" action="/search/"> {% csrf_token %}
 					<input class="form-control me-2" type="search" name="search" placeholder="Search Product"
 						aria-label="Search">
-					<button href="/search/" class="btn btn-secondary" type="submit">Search</button>
+					<button href="/search/" class="btn" style="background-color: #c54e09; color: white;" type="submit">Search</button>
 				</form>
 			</div>
 		</div>
 	</nav>
-
-	{% include 'users/hero.html' %}
-	{% include 'users/about.html' %}
-
 	{% block body %}
 	{% endblock %}
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
@@ -192,9 +189,6 @@
 	{% block js %}
 	{% endblock %}
 
-	{% include 'users/footer.html' %}
 </body>
-
-</html>
 
 </html>

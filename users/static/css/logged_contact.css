@@ -1,4 +1,4 @@
-	.contact-container {
+	.logged-container {
 		max-width: 700px;
 		margin: auto;
 		margin-top: 50px;
@@ -19,21 +19,22 @@
 		border-radius: 5px;
 	}
 
-	.btn-cont {
+	.btn-logged {
 		background-color: #FD8311;
-		color: #ffffff;
-		padding: 10px 15px;
+		color: white;
+		width: 8rem;
+		padding: 10px;
 		border: none;
 		border-radius: 5px;
 		cursor: pointer;
 		font-size: 16px;
 	}
 
-	.btn-cont:hover {
+	.btn-logged:hover {
 		background-color: #FFA347;
 	}
 
-	.contact-container {
+	.logged-container {
 		animation: fadeIn 0.5s ease-in-out;
 	}
 
