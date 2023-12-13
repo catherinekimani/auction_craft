@@ -28,6 +28,9 @@
 {% block body %}
 
 <div class="wrapper">
+	<div class="wrapper">
+		{% include 'users/hero.html' %}
+		{% include 'users/about.html' %}
 <div class="container mt-2 mb-3 content">
 
 	<div class="row">
@@ -52,5 +55,8 @@
 		{% endfor %}
 	</div>
 </div>
+
+{% include 'users/footer.html' %}
+
 </div>
 {% endblock %}
