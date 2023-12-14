@@ -1,5 +1,6 @@
 # AuctioCraft
-[![AuctionCraft Overview](../auction/users/static/images/capture.png)](../auction/users/static/images/capture.png)
+![capture](https://github.com/catherinekimani/auction_craft/assets/97945410/b1724607-5a49-4813-ab32-1fe8356dd69b)
+
 
 ## Introduction
 <p> AuctionCraft is an online auction platform crafted with Python and Django. It provides a seamless and intuitive experience for users to participate in auctions, showcasing a user-friendly interface and robust backend functionality.
