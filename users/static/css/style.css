@@ -8,7 +8,7 @@ header {
     display: flex;
     justify-content: space-between;
     padding: 20px;
-    background-color: #ffffff; /* Add your desired background color */
+    background-color: #ffffff;
 }
 
 
@@ -16,13 +16,13 @@ header {
     display: flex;
     align-items: center;
     font-size: 20px;
-	width: 80%; /* Adjust the width as per your preference */
-    max-width: 1200px; /* Set a max-width if needed */
-    margin: 0px auto; /* Center the content within the header */
+	width: 80%;
+    max-width: 1200px;
+    margin: 0px auto;
 }
 
 .logo img {
-    width: 20px; /* Adjust the size of the home icon */
+    width: 20px;
     margin-right: 10px;
 }
 
@@ -51,9 +51,9 @@ button:hover {
     align-items: center;
     justify-content: center;
     text-align: left;
-    color: #000000; /* Black text */
+    color: #000000;
     margin-bottom: 0px;
-    height: 70vh;
+    height: 50vh;
 }
 
 .hero h1 {
@@ -79,4 +79,3 @@ button:hover {
   color: #FD8311;
   border: 1px solid #ddd;
 }
-/* Add more styles as needed */

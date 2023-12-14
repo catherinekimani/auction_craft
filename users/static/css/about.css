@@ -9,9 +9,9 @@ body {
   }
   
   .about-section {
-    background-color: #FD8311; /* Background color for the About section */
-    color: #ffffff; /* Text color */
-    padding: 40px 0; /* Top and bottom padding */
+    background-color: #FD8311;
+    color: #ffffff;
+    padding: 40px 0;
   }
   
   .about-content {
@@ -21,16 +21,16 @@ body {
   }
   
   .about-image {
-    width: 60%; /* Equal width for image column */
+    width: 60%;
   }
   
   .about-image img {
-    max-width:80%; /* Make sure the image is responsive within its container */
+    max-width:80%;
      border-radius: 15px;
   }
   
   .about-text {
-    width: 40%; /* Equal width for text column */
+    width: 40%;
   }
   
   .about-title {
@@ -41,12 +41,12 @@ body {
   
   .about-description {
     font-size: 18px;
-    margin-bottom: 20px; /* Adjust spacing between title and description */
+    margin-bottom: 20px;
   }
   
   .start-selling-button {
     display: inline-block;
-    padding: 10px 20px; /* Adjust padding for button size */
+    padding: 10px 20px;
     background-color: #ffffff;
     color: #FD8311;
     text-decoration: none;
