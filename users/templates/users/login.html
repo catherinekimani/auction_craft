@@ -14,6 +14,13 @@
 <form method="POST">
 	{% csrf_token %}
 	<div class="container login-container">
+		{% if alert %}
+		<p class="alert alert-danger">{{ error_message }}</p>
+		{% elif messages %}
+		{% for message in messages %}
+		<p class="alert alert-success">{{ message }}</p>
+		{% endfor %}
+		{% endif %}
 		<div class="mb-3">
 			<label for="username" class="form-label login-label">Username</label>
 			<input type="text" class="form-control login-input" id="username" name="username"
@@ -26,7 +33,6 @@
 		</div>
 		<br>
 		<input type="submit" value="Submit" class="btn login-btn">
-
 	</div>
 </form>
 {% endblock %}
