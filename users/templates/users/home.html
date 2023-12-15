@@ -1,6 +1,7 @@
 {% extends 'users/base.html' %}
 {% load static %}
-{% block css %}
+
+{% block style %}
 <style>
 	html,
 	body {
@@ -9,54 +10,123 @@
 		padding: 0;
 		font-family: 'Open Sans';
 	}
-
+	.navbar {
+		background-color: #FD8311;
+	}
 	.wrapper {
 		min-height: 100%;
 		position: relative;
 	}
+
 	.content {
-        padding-bottom: 150px;
-    }
-	.btn {
-		background-color: #fd8311; color: white;
+		padding-bottom: 150px;
 	}
 
-	/*Style for hero*/
+	.btn {
+		background-color: #fd8311;
+		color: white;
+	}
+
+	.highest-bid-badge {
+		position: absolute;
+		top: 10px;
+		right: 10px;
+		width: 80px;
+		height: 80px;
+		border-radius: 50%;
+		background-color: red;
+		color: white;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		font-size: 16px;
+		animation: bounce 1s infinite alternate;
+	}
+
+	.highest-bid-text {
+		position: absolute;
+		top: 10px;
+		right: 10px;
+		color: rgb(128, 0, 11);
+		font-size: 15px;
+		font-weight: bold;
+	}
+
+	.no-bids {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		color: gray;
+		font-size: 16px;
+		font-weight: bold;
+		text-align: center;
+	}
+
+	@keyframes bounce {
+		0% {
+			transform: translateY(0);
+		}
+
+		100% {
+			transform: translateY(-10px);
+		}
+	}
 </style>
 {% endblock %}
 
 {% block body %}
 
 <div class="wrapper">
-		{% include 'users/hero.html' %}
-		{% include 'users/about.html' %}
+	{% include 'users/hero.html' %}
+	{% include 'users/about.html' %}
 
-<div class="container mt-2 mb-3 content">
+	<div class="container mt-2 mb-3 content">
 
-	<div class="row">
-		{% for product in products %}
-		<div class="col-lg-4 my-4">
-			<div class="card shadow align-items-center" style="width: 20rem; height: 25rem;">
-				<img src="{{ product.image.url }}" class="card-img-top user-image" alt="productImage" style="height: 250px;">
-				<div class="card-body">
-					<h5 class="card-title">{{product.name}}</h5>
-					<hr>
-					{% if request.user.is_authenticated %}
-					<button data-product="{{product.id}}" data-action="add" class="btn add-btn update-cart"
-						style="background-color: #fd8311; color: white;">Add To Cart</button>
-					<a href="/product_view/{{product.id}}/" class="btn btn-outline-secondary">View</a>
+		<div class="row">
+			{% for product in products %}
+			<div class="col-lg-4 my-4">
+				<div class="card shadow align-items-center" style="width: 20rem; height: 28rem; position: relative;">
+					<!-- Display the highest bid badge -->
+					{% if product.highest_bid and product.highest_bid.amount >= 10000 %}
+					<div class="highest-bid-badge" title="Highest Bid: ${{ product.highest_bid.amount }}">
+						{{ product.highest_bid.amount }}
+						<span>Highest Bid</span>
+					</div>
+					{% elif product.highest_bid %}
+					<div class="highest-bid-text" title="Highest Bid: ${{ product.highest_bid.amount }}">
+						Highest Bid: ${{ product.highest_bid.amount }}
+					</div>
 					{% else %}
-					<button class="btn" style="background-color: #fd8311; color: white;">Login to add the item</button>
+					<div class="no-bids">No bids yet</div>
 					{% endif %}
-					<h4 style="display: inline-block;">&nbsp;{{product.price}}</h4>
+					<img src="{{ product.image.url }}" class="card-img-top user-image" alt="productImage"
+						style="height: 250px;">
+					<div class="card-body">
+						<h5 class="card-title">{{product.name}}</h5>
+						<hr>
+						{% if request.user.is_authenticated %}
+						<button data-product="{{product.id}}" data-action="add" class="btn add-btn update-cart"
+							style="background-color: #fd8311; color: white;">Add To Cart</button>
+						<a href="/product_view/{{product.id}}/" class="btn btn-outline-secondary">View</a>
+
+						<!-- Add the Place Bid button here -->
+						<a href="/place_bid/{{product.id}}/" class="btn btn-outline-secondary">Place Bid</a>
+
+						{% else %}
+						<button class="btn" style="background-color: #fd8311; color: white;">Login to add the
+							item</button>
+						{% endif %}
+						<h4 style="display: inline-block;">&nbsp;{{product.price}}</h4>
+					</div>
 				</div>
 			</div>
+			{% endfor %}
 		</div>
-		{% endfor %}
 	</div>
-</div>
 
-{% include 'users/footer.html' %}
+	{% include 'users/footer.html' %}
 
 </div>
 {% endblock %}
