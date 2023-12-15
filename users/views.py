@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http.response import HttpResponse
 from .models import *
 from django.http import JsonResponse
@@ -6,30 +6,42 @@ import json
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from . inherit import cartData
+from .forms import BidForm
+from django.contrib import messages
 
 # register
 def register(request):
     if request.user.is_authenticated:
         return redirect("/")
     else:
-        if request.method=="POST":   
-            username = request.POST['username']
-            full_name=request.POST['full_name']
-            password1 = request.POST['password1']
-            password2 = request.POST['password2']
-            phone_number = request.POST['phone_number']
-            email = request.POST['email']
+        if request.method == "POST":
+            if 'full_name' in request.POST:
+                username = request.POST['username']
+                full_name = request.POST['full_name']
+                password1 = request.POST['password1']
+                password2 = request.POST['password2']
+                phone_number = request.POST['phone_number']
+                email = request.POST['email']
 
-            if password1 != password2:
+                if password1 != password2:
+                    alert = True
+                    return render(request, "users/register.html", {'alert': alert})
+
+                user = User.objects.create_user(username=username, password=password1, email=email)
+                customers = Customer.objects.create(user=user, name=full_name, phone_number=phone_number, email=email)
+                user.save()
+                customers.save()
+
+                user = authenticate(request, username=username, password=password1)
+                login(request, user)
+
+                return redirect("home")
+
+            else:
                 alert = True
-                return render(request, "users/register.html", {'alert':alert})
-            
-            user = User.objects.create_user(username=username, password=password1, email=email)
-            customers = Customer.objects.create(user=user, name=full_name, phone_number=phone_number, email=email)
-            user.save()
-            customers.save()
-            return render(request, "users/login.html")
+                return render(request, "users/register.html", {'alert': alert})
     return render(request, "users/register.html")
+
 # login
 def Login(request):
     if request.user.is_authenticated:
@@ -38,15 +50,18 @@ def Login(request):
         if request.method == "POST":
             username = request.POST['username']
             password = request.POST['password']
-            user = authenticate(username=username, password=password)
+            user = authenticate(request, username=username, password=password)
 
             if user is not None:
                 login(request, user)
+                print("User authenticated successfully.")
                 return redirect("/")
             else:
                 alert = True
-                return render(request, "users/login.html", {"alert":alert})
+                error_message = "Incorrect username or password. Please try again."
+                return render(request, "users/login.html", {"alert": alert, "error_message": error_message})
     return render(request, "users/login.html")
+
 # logout
 def Logout(request):
     logout(request)
@@ -97,12 +112,58 @@ def change_password(request):
 
 # home page
 def home(request):
+    if request.user.is_authenticated:
+        if request.user.is_staff:
+            # Redirect admin users to the admin dashboard
+            return redirect('admin:index')
+
     data = cartData(request)
     items = data['items']
     order = data['order']
     cartItems = data['cartItems']
     products = AuctionItem.objects.all()
-    return render(request, "users/home.html", {'products':products, 'cartItems':cartItems})
+
+    # Fetch highest bid for each product
+    for product in products:
+        bids = Bid.objects.filter(item=product).order_by('-amount')
+        highest_bid = bids.first()
+        product.highest_bid = highest_bid
+
+    # Bid form handling for home page
+    if request.method == "POST":
+        bid_form = BidForm(request.POST)
+        if bid_form.is_valid():
+            product_id = bid_form.cleaned_data['product_id']
+            bid_amount = bid_form.cleaned_data['amount']
+
+            product = get_object_or_404(AuctionItem, id=product_id)
+            bids = Bid.objects.filter(item=product).order_by('-amount')
+            highest_bid = bids.first() if bids else None
+
+            # Check if the bid is higher than the current highest bid
+            if highest_bid and bid_amount <= highest_bid.amount:
+                messages.error(request, 'Your bid must be higher than the current highest bid.')
+            else:
+                try:
+                    # Save the bid
+                    bid = Bid(customer=request.user.customer, item=product, amount=bid_amount)
+                    bid.save()
+                    messages.success(request, 'Bid placed successfully.')
+                    return redirect('home')
+                except Exception as e:
+                    messages.error(request, f'Error placing bid: {e}')
+        else:
+            messages.error(request, 'Invalid bid form.')
+
+    else:
+        bid_form = BidForm()
+
+    context = {
+        'products': products,
+        'cartItems': cartItems,
+        'bid_form': bid_form,
+    }
+    return render(request, "users/home.html", context)
 
 # cart page
 def cart(request):
@@ -240,3 +301,27 @@ def contact(request):
 # footer
 def footer_view(request):
     return render(request, 'users/footer.html')
+
+# bid view
+def place_bid(request, myid):
+    item = AuctionItem.objects.get(id=myid)
+    highest_bid = Bid.objects.filter(item=item).order_by('-amount').first()
+
+    if request.method == 'POST':
+        form = BidForm(request.POST)
+        if form.is_valid():
+            bid_amount = form.cleaned_data['amount']
+
+            if highest_bid and bid_amount <= highest_bid.amount:
+                messages.error(request, 'Your bid must be higher than the current highest bid.')
+            else:
+                bid = Bid(customer=request.user.customer, item=item, amount=bid_amount)
+                bid.save()
+                messages.success(request, 'Bid placed successfully.')
+                return redirect('place_bid', myid=item.id)
+    else:
+        form = BidForm()
+
+    # Calculate bid end time based 
+    bid_end_time = item.bid_end_time
+    return render(request, 'users/place_bid.html', {'form': form, 'item': item, 'highest_bid': highest_bid, 'bid_end_time': bid_end_time})

@@ -4,7 +4,7 @@ from cloudinary.models import CloudinaryField
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.timezone import now
-
+from datetime import timedelta
 class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
@@ -21,6 +21,11 @@ class AuctionItem(models.Model):
 
     def __str__(self):
         return self.name
+
+    @property
+    def bid_end_time(self):
+        latest_bid = self.bid_set.latest('timestamp')
+        return latest_bid.timestamp + timedelta(days=1)
 
 class AuctionItemFeature(models.Model):
     product = models.ForeignKey(AuctionItem, on_delete=models.CASCADE)
@@ -103,3 +108,12 @@ class UserContact(models.Model):
 
     def __str__(self):
         return self.name
+
+class Bid(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    item = models.ForeignKey(AuctionItem, on_delete=models.CASCADE)
+    amount = models.FloatField()
+    timestamp = models.DateTimeField(default=now)
+
+    def __str__(self):
+        return f"{self.customer} bid {self.amount} on {self.item}"
