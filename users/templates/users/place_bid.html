@@ -1,0 +1,35 @@
+{% extends 'users/base.html' %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/bid.css' %}">
+<style>
+	.navbar {
+		background-color: #FD8311;
+	}
+</style>
+{% endblock style %}
+
+{% block body %}
+<h2>Place Bid for {{ item.name }}</h2>
+
+{% if messages %}
+<ul class="messages">
+	{% for message in messages %}
+	<li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+		{% endfor %}
+</ul>
+{% endif %}
+
+<p>Current highest bid: {% if highest_bid %} {{ highest_bid.amount }}{% else %}No bids yet{% endif %}</p>
+
+<p>Bid End Time: {{ item.bid_end_time|date:"F j, Y H:i" }}</p>
+
+
+<form method="post" class="bid-form">
+	{% csrf_token %}
+	{{ form.as_p }}
+
+	<button type="submit">Place Bid</button>
+</form>
+{% endblock %}
