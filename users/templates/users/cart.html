@@ -1,54 +1,84 @@
 {% extends 'users/base.html' %}
 {% load static %}
+{% block style %}
+<style>
+    .chg-quantity {
+        background-color: #f2f4f5;
+        color: #000;
+        padding: 5px;
+        border-radius: 3px;
+        margin-right: 5px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+        width: 30px;
+    }
 
-{% block css %}
+    .quantity-buttons {
+        display: flex;
+        align-items: center;
+    }
+
+    .quantity-buttons button {
+        margin-right: 5px;
+    }
+
+    .cart-row img {
+        max-width: 100px;
+        height: auto;
+    }
+</style>
 {% endblock %}
+
 {% block body %}
 <div class="container-fluid row">
-	<div class="col-lg-12">
-		<div class="box-element">
-			<a href="/" class="btn btn-outline-dark">&#x2190 Continue Shopping</a>
-			<br><br>
-			<table class="table">
-				<tr>
-					<th>
-						<h5>Items: <strong>{{order.get_cart_items}}</strong></h5>
-					</th>
-					<th>
-						<h5>Total: <strong>{{order.get_cart_total}}</strong></h5>
-					</th>
-					<th><a href="/checkout/" class="btn btn-success" style="float: right; margin: 5px;">Checkout</a>
-					</th>
-				</tr>
-			</table>
-		</div>
-		<br>
-		<div class="box-element">
-			<div class="cart-row">
-				<div style="flex: 2;"><strong>Image</strong></div>
-				<div style="flex: 2;"><strong>Item</strong></div>
-				<div style="flex: 1;"><strong>Price</strong></div>
-				<div style="flex: 1;"><strong>Quantity</strong></div>
-				<div style="flex: 1;"><strong>Total</strong></div>
-			</div>
-			{% for item in items %}
-			<div class="cart-row">
-				<div style="flex: 2;"><img class="row-image" src="{{item.product.image.url}}" alt=""></div>
-				<div style="flex: 2;">{{item.product.name}}</div>
-				<div style="flex: 1;">{{item.product.price}}</div>
-				<div style="flex: 1;">
-					<p class="quantity">{{item.quantity}}</p>
-					<div class="quantity">
-						<img data-product="{{item.product.id}}" data-action="add" src="{% static 'increase.png' %}"
-							class="chg-quantity update-cart" alt="">
-						<img data-product="{{item.product.id}}" data-action="remove" src="{% static 'decrease.png' %}"
-							class="chg-quantity update-cart" alt="">
-					</div>
-				</div>
-				<div style="flex: 1;">{{item.get_total}}</div>
-			</div>
-			{% endfor %}
-		</div>
-	</div>
+    <div class="col-lg-12">
+        <div class="box-element">
+            <a href="/" class="btn btn-outline-dark">&#x2190 Continue Shopping</a>
+            <br><br>
+            <table class="table">
+                <tr>
+                    <th>
+                        <h5>Items: <strong>{{order.get_cart_items}}</strong></h5>
+                    </th>
+                    <th>
+                        <h5>Total: <strong>₹{{order.get_cart_total}}</strong></h5>
+                    </th>
+                    <th>
+                        <a href="/checkout/" class="btn btn-success" style="float: right; margin: 5px;">Checkout</a>
+                    </th>
+                </tr>
+            </table>
+        </div>
+        <br>
+        <div class="box-element">
+            <table class="table">
+                <tr>
+                    <th style="flex: 2;"><strong>Image</strong></th>
+                    <th style="flex: 2;"><strong>Item</strong></th>
+                    <th style="flex: 1;"><strong>Price</strong></th>
+                    <th style="flex: 2;"><strong>Quantity</strong></th>
+                    <th style="flex: 1;"><strong>Total</strong></th>
+                </tr>
+                {% for item in items %}
+                <tr class="cart-row">
+                    <td style="flex: 2;"><img class="row-image" src="{{item.product.image.url}}" alt=""></td>
+                    <td style="flex: 2;">{{item.product.name}}</td>
+                    <td style="flex: 1;">{{item.product.price}}</td>
+                    <td style="flex: 2;">
+                        <p class="quantity">{{item.quantity}}</p>
+                        <div class="quantity-buttons">
+                            <button data-product="{{ item.product.id }}" data-action="add" class="chg-quantity update-cart">
+                                +
+                            </button>
+                            <button data-product="{{ item.product.id }}" data-action="remove" class="chg-quantity update-cart">
+                                -
+                            </button>
+                        </div>
+                    </td>
+                    <td style="flex: 1;">{{item.get_total}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
 </div>
 {% endblock %}
