@@ -6,7 +6,9 @@ import json
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from . inherit import cartData
-from .forms import BidForm
+# forms
+from .forms import BidForm, AuctionItemForm
+# messages
 from django.contrib import messages
 
 # register
@@ -129,39 +131,32 @@ def home(request):
         highest_bid = bids.first()
         product.highest_bid = highest_bid
 
-    # Bid form handling for home page
     if request.method == "POST":
         bid_form = BidForm(request.POST)
+        auction_item_form = AuctionItemForm(request.POST, request.FILES)
+
         if bid_form.is_valid():
-            product_id = bid_form.cleaned_data['product_id']
-            bid_amount = bid_form.cleaned_data['amount']
+            pass
 
-            product = get_object_or_404(AuctionItem, id=product_id)
-            bids = Bid.objects.filter(item=product).order_by('-amount')
-            highest_bid = bids.first() if bids else None
+        elif auction_item_form.is_valid():
+            auction_item = auction_item_form.save(commit=False)
+            auction_item.seller = request.user
+            auction_item.save()
+            messages.success(request, 'Auction item added successfully.')
+            return redirect('home')
 
-            # Check if the bid is higher than the current highest bid
-            if highest_bid and bid_amount <= highest_bid.amount:
-                messages.error(request, 'Your bid must be higher than the current highest bid.')
-            else:
-                try:
-                    # Save the bid
-                    bid = Bid(customer=request.user.customer, item=product, amount=bid_amount)
-                    bid.save()
-                    messages.success(request, 'Bid placed successfully.')
-                    return redirect('home')
-                except Exception as e:
-                    messages.error(request, f'Error placing bid: {e}')
         else:
-            messages.error(request, 'Invalid bid form.')
+            messages.error(request, 'Invalid bid or auction item form.')
 
     else:
         bid_form = BidForm()
+        auction_item_form = AuctionItemForm()
 
     context = {
         'products': products,
         'cartItems': cartItems,
         'bid_form': bid_form,
+        'auction_item_form': auction_item_form,
     }
     return render(request, "users/home.html", context)
 
@@ -238,20 +233,38 @@ def updateItem(request):
     customer = request.user.customer
     product = AuctionItem.objects.get(id=productID)
     order, created = Purchase.objects.get_or_create(customer=customer, complete=False)
-    orderItem, created = PurchaseItem.objects.get_or_create(order=order, product=product)
-    update_order, created = OrderUpdate.objects.get_or_create(order_id=order, desc="Your Order is Successfully Placed.")
 
-    if action == 'add':
-        orderItem.quantity = (orderItem.quantity + 1)
-    elif action == 'remove':
-        orderItem.quantity = (orderItem.quantity - 1)
+    if product.seller != customer.user:
+        orderItem, created = PurchaseItem.objects.get_or_create(order=order, product=product)
+        update_order, created = OrderUpdate.objects.get_or_create(order_id=order, desc="Your Order is Successfully Placed.")
 
-    orderItem.save()
-    update_order.save()
+        if action == 'add':
+            orderItem.quantity = (orderItem.quantity + 1)
+        elif action == 'remove':
+            orderItem.quantity = (orderItem.quantity - 1)
 
-    if orderItem.quantity <= 0:
-        orderItem.delete()
-    return JsonResponse('Item was added', safe=False)
+        orderItem.save()
+        update_order.save()
+
+        if orderItem.quantity <= 0:
+            orderItem.delete()
+
+        # updated cart data
+        data = cartData(request)
+        items = data['items']
+        order = data['order']
+        cartItems = data['cartItems']
+
+        response_data = {
+            'message': 'Item was added' if action == 'add' else 'Item was removed',
+            'cartItems': cartItems,
+            'orderTotal': order.get_cart_total,
+        }
+
+        return JsonResponse(response_data, safe=False)
+
+    else:
+        return JsonResponse('You cannot add your own item to the cart', safe=False)
 
 # product view
 def product_view(request, myid):
@@ -298,10 +311,6 @@ def contact(request):
         return render(request, 'users/contact.html', {'alert':alert})
     return render(request, "users/contact.html")
 
-# footer
-def footer_view(request):
-    return render(request, 'users/footer.html')
-
 # bid view
 def place_bid(request, myid):
     item = AuctionItem.objects.get(id=myid)
@@ -322,6 +331,18 @@ def place_bid(request, myid):
     else:
         form = BidForm()
 
-    # Calculate bid end time based 
     bid_end_time = item.bid_end_time
     return render(request, 'users/place_bid.html', {'form': form, 'item': item, 'highest_bid': highest_bid, 'bid_end_time': bid_end_time})
+
+# user product view
+def user_products(request):
+    if request.user.is_authenticated:
+        user = request.user
+        products = AuctionItem.objects.filter(seller=user)
+        return render(request, 'users/user_products.html', {'products': products})
+    else:
+        return render(request, 'not_authenticated.html')
+    
+# footer
+def footer_view(request):
+    return render(request, 'users/footer.html')
