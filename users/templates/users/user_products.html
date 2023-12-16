@@ -1,0 +1,49 @@
+{% extends 'users/base.html' %}
+
+{% block body %}
+<div class="container mt-5">
+	<h2>Your Products</h2>
+
+	{% if products %}
+	<table class="table mt-3">
+		<thead>
+			<tr>
+				<th scope="col">Product Image</th>
+				<th scope="col">Product Name</th>
+				<th scope="col">Price</th>
+				<th scope="col">Current Bid</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for product in products %}
+			<tr>
+				<td>
+					{% if product.image %}
+					<img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-thumbnail"
+						style="max-width: 100px;">
+					{% else %}
+					<p>No image available</p>
+					{% endif %}
+				</td>
+				<td>
+					<h4>{{ product.name }}</h4>
+				</td>
+				<td>
+					<p>{{ product.price }}</p>
+				</td>
+				<td>
+					{% if product.current_bid %}
+					<p>{{ product.current_bid.amount }}</p>
+					{% else %}
+					<p>No bids yet</p>
+					{% endif %}
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	{% else %}
+	<p>No products added yet.</p>
+	{% endif %}
+</div>
+{% endblock %}
