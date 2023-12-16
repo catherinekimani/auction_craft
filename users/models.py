@@ -1,32 +1,44 @@
 from django.db import models
 from django.contrib.auth.models import User
+
+# image
 from cloudinary.models import CloudinaryField
-from django.db import models
-from django.contrib.auth.models import User
-from django.utils.timezone import now
+
+from django.core.exceptions import ObjectDoesNotExist
+
+# time imports
+from django.utils import timezone
 from datetime import timedelta
+from django.utils.timezone import now
+
+
+# Customer model
 class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     email = models.CharField(max_length=100)
     phone_number = models.CharField(max_length=10, null=True, blank=True)
+    added_items = models.ManyToManyField('AuctionItem', related_name='sellers', blank=True)
 
     def __str__(self):
         return str(self.user)
 
+# AuctionItem model
 class AuctionItem(models.Model):
+    seller = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     price = models.FloatField()
     image = CloudinaryField('image')
 
-    def __str__(self):
-        return self.name
-
     @property
     def bid_end_time(self):
-        latest_bid = self.bid_set.latest('timestamp')
-        return latest_bid.timestamp + timedelta(days=1)
+        try:
+            latest_bid = self.bid_set.latest('timestamp')
+            return latest_bid.timestamp + timedelta(days=1)
+        except ObjectDoesNotExist:
+            return timezone.now() + timedelta(days=1)
 
+# AuctionItemFeature model
 class AuctionItemFeature(models.Model):
     product = models.ForeignKey(AuctionItem, on_delete=models.CASCADE)
     feature = models.CharField(max_length=1000, null=True, blank=True)
@@ -34,6 +46,7 @@ class AuctionItemFeature(models.Model):
     def __str__(self):
         return str(self.product) + " Feature: " + self.feature
 
+# AuctionItemReview model
 class AuctionItemReview(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE) 
     product = models.ForeignKey(AuctionItem, on_delete=models.CASCADE)
@@ -43,6 +56,7 @@ class AuctionItemReview(models.Model):
     def __str__(self):
         return str(self.customer) +  " Review: " + self.content
 
+# purchase model
 class Purchase(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True)
     date_ordered = models.DateTimeField(default=now)
@@ -63,6 +77,7 @@ class Purchase(models.Model):
         total = sum([item.quantity for item in orderitems])
         return total
 
+# purchase item model
 class PurchaseItem(models.Model):
     product = models.ForeignKey(AuctionItem, on_delete=models.SET_NULL, null=True)
     order = models.ForeignKey(Purchase, on_delete=models.SET_NULL, null=True)
@@ -77,6 +92,7 @@ class PurchaseItem(models.Model):
         total = self.product.price * self.quantity
         return total
 
+# order update model
 class OrderUpdate(models.Model):
     order_id = models.ForeignKey(Purchase, on_delete=models.CASCADE)
     desc = models.CharField(max_length=500)
@@ -85,6 +101,7 @@ class OrderUpdate(models.Model):
     def __str__(self):
         return str(self.order_id)
 
+# purchase details model
 class PurchaseDetail(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True)
     order = models.ForeignKey(Purchase, on_delete=models.SET_NULL, null=True)
@@ -99,7 +116,7 @@ class PurchaseDetail(models.Model):
 
     def __str__(self):
         return self.address
-
+# user contact info
 class UserContact(models.Model):
     name = models.CharField(max_length=100)
     email = models.CharField(max_length=50)
@@ -109,6 +126,7 @@ class UserContact(models.Model):
     def __str__(self):
         return self.name
 
+# bid model
 class Bid(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     item = models.ForeignKey(AuctionItem, on_delete=models.CASCADE)
