@@ -1,5 +1,5 @@
 # AuctioCraft
-![capture](https://github.com/catherinekimani/auction_craft/assets/97945410/b1724607-5a49-4813-ab32-1fe8356dd69b)
+![overviewimg](https://github.com/catherinekimani/auction_craft/assets/97945410/f6073ebd-1bbf-4445-81f3-5e4d50411db0)
 
 
 ## Introduction
