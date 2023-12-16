@@ -3,6 +3,27 @@
 
 {% block style %}
 <style>
+	.add-auction-form {
+        max-width: 600px;
+        margin: auto;
+    }
+
+    .add-auction-form .card-title {
+        text-align: center;
+        margin-bottom: 1.5rem;
+    }
+
+    .add-auction-form .form-label {
+        font-weight: bold;
+    }
+
+    .add-auction-form .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .add-auction-form .btn {
+        width: 100%;
+    }
 	html,
 	body {
 		height: 100%;
@@ -10,9 +31,11 @@
 		padding: 0;
 		font-family: 'Open Sans';
 	}
+
 	.navbar {
 		background-color: #FD8311;
 	}
+
 	.wrapper {
 		min-height: 100%;
 		position: relative;
@@ -26,43 +49,43 @@
 		background-color: #fd8311;
 		color: white;
 	}
+    .highest-bid-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background-color: #441806;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-size: 16px;
+        animation: bounce 1s infinite alternate;
+    }
 
-	.highest-bid-badge {
-		position: absolute;
-		top: 10px;
-		right: 10px;
-		width: 80px;
-		height: 80px;
-		border-radius: 50%;
-		background-color: red;
-		color: white;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		font-size: 16px;
-		animation: bounce 1s infinite alternate;
-	}
+    .highest-bid-text {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        color: #441806;
+        font-size: 15px;
+        font-weight: bold;
+    }
 
-	.highest-bid-text {
-		position: absolute;
-		top: 10px;
-		right: 10px;
-		color: rgb(128, 0, 11);
-		font-size: 15px;
-		font-weight: bold;
-	}
+    .no-bids {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: gray;
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+    }
 
-	.no-bids {
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		color: gray;
-		font-size: 16px;
-		font-weight: bold;
-		text-align: center;
-	}
 
 	@keyframes bounce {
 		0% {
@@ -84,49 +107,93 @@
 
 	<div class="container mt-2 mb-3 content">
 
-		<div class="row">
-			{% for product in products %}
-			<div class="col-lg-4 my-4">
-				<div class="card shadow align-items-center" style="width: 20rem; height: 28rem; position: relative;">
-					<!-- Display the highest bid badge -->
-					{% if product.highest_bid and product.highest_bid.amount >= 10000 %}
-					<div class="highest-bid-badge" title="Highest Bid: ${{ product.highest_bid.amount }}">
-						{{ product.highest_bid.amount }}
-						<span>Highest Bid</span>
+		<!-- form for adding new auction items -->
+	<div class="row justify-content-center align-items-center add-auction-form">
+		<div class="col-lg-6">
+			<div class="card shadow p-4 rounded">
+				<h5 class="card-title">Add New Auction Item For Sale</h5>
+				<form method="post" enctype="multipart/form-data">
+					{% csrf_token %}
+					{{ auction_item_form.non_field_errors }}
+					<div class="form-group">
+						<label for="{{ auction_item_form.name.id_for_label }}" class="form-label">Product Name</label>
+						{{ auction_item_form.name }}
+						{{ auction_item_form.name.errors }}
 					</div>
-					{% elif product.highest_bid %}
-					<div class="highest-bid-text" title="Highest Bid: ${{ product.highest_bid.amount }}">
-						Highest Bid: ${{ product.highest_bid.amount }}
+	
+					<div class="form-group">
+						<label for="{{ auction_item_form.price.id_for_label }}" class="form-label">Price</label>
+						{{ auction_item_form.price }}
+						{{ auction_item_form.price.errors }}
 					</div>
-					{% else %}
-					<div class="no-bids">No bids yet</div>
-					{% endif %}
-					<img src="{{ product.image.url }}" class="card-img-top user-image" alt="productImage"
-						style="height: 250px;">
-					<div class="card-body">
-						<h5 class="card-title">{{product.name}}</h5>
-						<hr>
-						{% if request.user.is_authenticated %}
-						<button data-product="{{product.id}}" data-action="add" class="btn add-btn update-cart"
-							style="background-color: #fd8311; color: white;">Add To Cart</button>
-						<a href="/product_view/{{product.id}}/" class="btn btn-outline-secondary">View</a>
-
-						<!-- Add the Place Bid button here -->
-						<a href="/place_bid/{{product.id}}/" class="btn btn-outline-secondary">Place Bid</a>
-
-						{% else %}
-						<button class="btn" style="background-color: #fd8311; color: white;">Login to add the
-							item</button>
-						{% endif %}
-						<h4 style="display: inline-block;">&nbsp;{{product.price}}</h4>
+	
+					<div class="form-group">
+						<label for="{{ auction_item_form.image.id_for_label }}" class="form-label">Product Image</label>
+						{{ auction_item_form.image }}
+						{{ auction_item_form.image.errors }}
 					</div>
-				</div>
+	
+					<div class="d-grid gap-2">
+						<button type="submit" class="btn">Add Auction Item</button>
+					</div>
+				</form>
 			</div>
-			{% endfor %}
 		</div>
 	</div>
+<div class="row">
+{% for product in products %}
+<div class="col-lg-4 my-4">
+	<div class="card shadow align-items-center" style="width: 20rem; height: 28rem; position: relative;">
+		<!-- highest bid badge -->
+							{% if product.highest_bid and product.highest_bid.amount >= 10000 %}
+							<div class="highest-bid-badge" title="Highest Bid: ${{ product.highest_bid.amount }}">
+								{{ product.highest_bid.amount }}
+								<span>Highest Bid</span>
+							</div>
+							{% elif product.highest_bid %}
+							<div class="highest-bid-text" title="Highest Bid: ${{ product.highest_bid.amount }}">
+								Highest Bid: ${{ product.highest_bid.amount }}
+							</div>
+							{% else %}
+							<div class="no-bids">No bids yet</div>
+							{% endif %}
+		<img src="{{ product.image.url }}" class="card-img-top user-image" alt="productImage" style="height: 250px;">
+<div class="card-body">
+	<h5 class="card-title">{{ product.name }}</h5>
+	<hr>
 
+	{% if request.user.is_authenticated %}
+	{% if request.user == product.seller %}
+	<!-- If the user is the seller -->
+	<a href="/product_view/{{ product.id }}/" class="btn btn-outline-secondary">View</a>
+	<button class="btn btn-disabled" disabled>Add To Cart</button>
+	<a href="/place_bid/{{ product.id }}/" class="btn btn-outline-secondary" disabled>Place Bid</a>
+	{% else %}
+	<!-- If the user is not the seller -->
+	<button data-product="{{ product.id }}" data-action="add" class="btn add-btn update-cart">Add To Cart</button>
+	<a href="/product_view/{{ product.id }}/" class="btn btn-outline-secondary">View</a>
+
+	{% if product.seller == request.user %}
+	<!-- If the user is the seller -->
+	<a href="/place_bid/{{ product.id }}/" class="btn btn-outline-secondary" disabled>Place Bid</a>
+	{% else %}
+	<!-- If the user is not the seller -->
+	<a href="/place_bid/{{ product.id }}/" class="btn btn-outline-secondary">Place Bid</a>
+	{% endif %}
+	{% endif %}
+	{% else %}
+	<!-- If the user is not authenticated -->
+	<button class="btn">Login to add the item</button>
+	{% endif %}
+
+	<h4 style="display: inline-block;">&nbsp;{{ product.price }}</h4>
+</div>
+
+	</div>
+</div>
+{% endfor %}
+		</div>
+	</div>
 	{% include 'users/footer.html' %}
-
 </div>
 {% endblock %}
