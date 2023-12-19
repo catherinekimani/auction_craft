@@ -29,15 +29,18 @@
 			</ul>
 			<br>
 			<h2>Add Reviews Here</h2>
-			<form method="POST" action="/product_view/{{product.id}}/"> {% csrf_token %}
+			<form method="POST" action="/product_view/{{product.id}}/">
+				{% csrf_token %}
+				<input type="hidden" name="customer" value="{{ request.user.username }}" />
 				<div class="form-floating">
-					<textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
-						style="height: 100px" id="content" name="content"></textarea>
-					<label for="floatingTextarea2">Leave a feedback about the {{product.name}} here.</label>
+					<textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"
+						id="content" name="content"></textarea>
+					<label for="floatingTextarea2">Leave feedback about {{product.name}} here.</label>
 					<br>
 					<button type="submit" class="btn btn-primary">Add Review</button>
 				</div>
 			</form>
+
 		</div>
 	</div>
 	<div class="container mt-2">

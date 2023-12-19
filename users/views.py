@@ -276,14 +276,16 @@ def product_view(request, myid):
     order = data['order']
     cartItems = data['cartItems']
 
-    if request.method=="POST":
-        customer = request.POST['customer']
+    if request.method == "POST":
+        user = request.user
+        customer, created = Customer.objects.get_or_create(user=user)
+
         content = request.POST['content']
         review = AuctionItemReview(customer=customer, content=content, product=product)
         review.save()
         return redirect(f"/product_view/{product.id}")
-    return render(request, "users/items.html", {'product':product, 'cartItems':cartItems, 'feature':feature, 'reviews':reviews})
 
+    return render(request, "users/items.html", {'product': product, 'cartItems': cartItems, 'feature': feature, 'reviews': reviews})
 # search
 def search(request):
     data = cartData(request)
