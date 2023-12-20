@@ -11,6 +11,12 @@
 {% endblock style %}
 
 {% block body %}
+{% if alert %}
+<div class="alert alert-danger" role="alert">
+	{{ message }}
+</div>
+{% endif %}
+
 <form class="register-container mt-4" method="POST">
 	{% csrf_token %}
 
