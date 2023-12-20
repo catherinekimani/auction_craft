@@ -1,8 +1,10 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.http.response import HttpResponse
 from .models import *
 from django.http import JsonResponse
 import json
+
+import re
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from . inherit import cartData
@@ -10,6 +12,12 @@ from . inherit import cartData
 from .forms import BidForm, AuctionItemForm
 # messages
 from django.contrib import messages
+
+# validation
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
 
 # register
 def register(request):
@@ -25,9 +33,33 @@ def register(request):
                 phone_number = request.POST['phone_number']
                 email = request.POST['email']
 
+                if any(char.isdigit() for char in username):
+                    alert = True
+                    return render(request, "users/register.html", {'alert': alert, 'message': 'Username cannot contain numbers'})
+
+                if any(char.isdigit() for char in full_name):
+                    alert = True
+                    return render(request, "users/register.html", {'alert': alert, 'message': 'Full name cannot contain numbers'})
+
+                try:
+                    validate_password(password1)
+                except ValidationError as e:
+                    alert = True
+                    return render(request, "users/register.html", {'alert': alert, 'message': e.messages[0]})
+
                 if password1 != password2:
                     alert = True
-                    return render(request, "users/register.html", {'alert': alert})
+                    return render(request, "users/register.html", {'alert': alert, 'message': 'Passwords do not match'})
+
+                try:
+                    validate_email(email)
+                except ValidationError:
+                    alert = True
+                    return render(request, "users/register.html", {'alert': alert, 'message': 'Invalid email address'})
+
+                if User.objects.filter(email=email).exists():
+                    alert = True
+                    return render(request, "users/register.html", {'alert': alert, 'message': 'Email address already in use'})
 
                 user = User.objects.create_user(username=username, password=password1, email=email)
                 customers = Customer.objects.create(user=user, name=full_name, phone_number=phone_number, email=email)
@@ -41,7 +73,8 @@ def register(request):
 
             else:
                 alert = True
-                return render(request, "users/register.html", {'alert': alert})
+                return render(request, "users/register.html", {'alert': alert, 'message': 'Invalid registration details'})
+    
     return render(request, "users/register.html")
 
 # login
